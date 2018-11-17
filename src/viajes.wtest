@@ -1,0 +1,77 @@
+import idiomas.*
+import actividades.*
+import socios.* 
+
+describe "tests de viajes" {
+	const excursionCiudad1 = new ExcursionACiudad(cantidadDeAtracciones = 4)
+	const excursionCiudadTropical1 = new ExcursionACiudadTropical(cantidadDeAtracciones = 4)
+	const excursionCiudad2 = new ExcursionACiudad(cantidadDeAtracciones = 8)
+	const excursionCiudad3 = new ExcursionACiudad(cantidadDeAtracciones = 5)
+	const excursionCiudadTropical2 = new ExcursionACiudadTropical(cantidadDeAtracciones = 8)
+	const excursionCiudadTropical3 = new ExcursionACiudadTropical(cantidadDeAtracciones = 10)
+	const salidaDeTrekking1 = new SalidaDeTrekking( senderos = 100, diasDeSol = 130 )
+	const salidaDeTrekking2 = new SalidaDeTrekking( senderos = 50, diasDeSol = 240 )
+	const salidaDeTrekking3 = new SalidaDeTrekking( senderos = 250, diasDeSol = 130 )
+	
+	fixture {
+		excursionCiudad3.agregarIdioma(ingles)
+		salidaDeTrekking2.agregarIdioma(ingles)
+		salidaDeTrekking2.agregarIdioma(espaniol)
+	}
+	
+	test "tests de excursionCiudad1" {
+		assert.equals(2,excursionCiudad1.cantidadDeDias())
+		assert.notThat(excursionCiudad1.implicaEsfuerzo())
+		assert.notThat(excursionCiudad1.sirveParaBroncearse())
+	}
+	
+	test "tests de excursionCiudadTropical1" {
+		assert.equals(3,excursionCiudadTropical1.cantidadDeDias())
+		assert.notThat(excursionCiudadTropical1.implicaEsfuerzo())
+		assert.that(excursionCiudadTropical1.sirveParaBroncearse())
+	}
+	
+	test "tests de excursionCiudad2" {
+		assert.equals(4,excursionCiudad2.cantidadDeDias())
+		assert.that(excursionCiudad2.implicaEsfuerzo())
+		assert.notThat(excursionCiudad2.sirveParaBroncearse())
+	}
+	
+	test "tests de excursionCiudadTropical2" {
+		assert.equals(5,excursionCiudadTropical2.cantidadDeDias())
+		assert.that(excursionCiudadTropical2.implicaEsfuerzo())
+		assert.that(excursionCiudadTropical2.sirveParaBroncearse())
+	}
+	
+	test "tests de excursionCiudadTropical3" {
+		assert.equals(6,excursionCiudadTropical3.cantidadDeDias())
+		assert.that(excursionCiudadTropical3.implicaEsfuerzo())
+		assert.that(excursionCiudadTropical3.sirveParaBroncearse())
+	}
+	
+	test "test de salida de trekking1" {
+		assert.equals(2,salidaDeTrekking1.cantidadDeDias())
+		assert.that(salidaDeTrekking1.implicaEsfuerzo())
+		assert.notThat(salidaDeTrekking1.sirveParaBroncearse())
+	}
+	
+	test "test de salida de trekking2" {
+		assert.equals(1,salidaDeTrekking2.cantidadDeDias())
+		assert.notThat(salidaDeTrekking2.implicaEsfuerzo())
+		assert.that(salidaDeTrekking2.sirveParaBroncearse())
+	}
+	
+	test "test de salida de trekking3" {
+		assert.equals(5,salidaDeTrekking3.cantidadDeDias())
+		assert.that(salidaDeTrekking3.implicaEsfuerzo())
+		assert.that(salidaDeTrekking3.sirveParaBroncearse())
+	}
+	
+	test "tests de excursionCiudad3" {
+		assert.that(excursionCiudad3.esInteresante())
+	}
+	
+	test "tests de salidaDeTrekking2" {
+		assert.that(salidaDeTrekking2.esInteresante())
+	}
+}

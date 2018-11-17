@@ -1,0 +1,49 @@
+import idiomas.*
+import actividades.*
+import socios.* 
+
+describe "tests de viajes" {
+	const viajeAPlaya1 = new ViajeALaPlaya( largo = 1000 ) 
+	const viajeAPlaya2 = new ViajeALaPlaya( largo = 2000 )
+	const claseDeGimnasia1 = new Gimnasio()
+	const excursionCiudadTropical2 = new ExcursionACiudadTropical(cantidadDeAtracciones = 8)
+	const excursionCiudad2 = new ExcursionACiudad(cantidadDeAtracciones = 8) // implica esfuerzo
+	
+	const roque = new Socio( actividadesRealizadas = [viajeAPlaya1, viajeAPlaya2], edad = 30, tipoDeSocio = tranquilo, maximoDeActividades = 2)
+	const ana = new Socio( actividadesRealizadas = [viajeAPlaya1, viajeAPlaya2], edad = 30, tipoDeSocio = tranquilo, maximoDeActividades = 3)
+	const pablo = new Socio( edad = 30, tipoDeSocio = tranquilo, maximoDeActividades = 3) //4 dias de viaje para que valga la pena
+	const epifanio = new Socio( actividadesRealizadas = [viajeAPlaya1, viajeAPlaya2], edad = 30, tipoDeSocio = coherente, maximoDeActividades = 3) //adora el sol, actividad broncea sino implica esfuerzo
+	const euclisio = new Socio( edad = 30, tipoDeSocio = relajado, maximoDeActividades = 3) //
+	
+	method euclisioTest() {
+		euclisio.agregarIdioma(ingles)
+		euclisio.agregarIdioma(espaniol)
+		excursionCiudadTropical2.agregarIdioma(ingles)
+		excursionCiudadTropical2.agregarIdioma(quechua)
+		excursionCiudad2.agregarIdioma(frances)
+		excursionCiudad2.agregarIdioma(quechua)
+	}
+	
+	test "tests de roque" {
+		assert.that(roque.adoraElSol())
+		assert.equals([viajeAPlaya2], roque.actividadesEsforzadas())
+		assert.throwsExceptionWithMessage("No se puede agregar "+claseDeGimnasia1+" porque ya se alcanzó el maximo",{roque.realizarUnaActividad(claseDeGimnasia1)})
+	}
+	
+	test "tests de ana" {
+		ana.realizarUnaActividad(claseDeGimnasia1)
+		assert.notThat(ana.adoraElSol())
+		assert.equals([viajeAPlaya2, claseDeGimnasia1], ana.actividadesEsforzadas())
+	}
+	
+	test "actividades que le atraen a los socios " {
+		assert.notThat(pablo.leAtraeLaActividad(viajeAPlaya1)) //lleva 2 dias
+		assert.that(pablo.leAtraeLaActividad(excursionCiudadTropical2)) //lleva 5 dias
+		assert.that(epifanio.leAtraeLaActividad(excursionCiudadTropical2)) //porque adora el sol y la actividad broncea
+		epifanio.realizarUnaActividad(claseDeGimnasia1)
+		assert.that(epifanio.leAtraeLaActividad(excursionCiudad2)) //porque implica esfuerzo y no adora el sol
+		self.euclisioTest()
+		assert.that(euclisio.leAtraeLaActividad(excursionCiudadTropical2)) //porque habla ingles
+		assert.notThat(euclisio.leAtraeLaActividad(excursionCiudad2)) //porque no habla ningun idioma
+	}
+}
