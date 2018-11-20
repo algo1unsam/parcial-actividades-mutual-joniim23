@@ -36,7 +36,7 @@ describe "tests de viajes" {
 		assert.equals([viajeAPlaya2, claseDeGimnasia1], ana.actividadesEsforzadas())
 	}
 	
-	test "actividades que le atraen a los socios " {
+	test "actividades que le atraen a los socios " { //Mejor hacer tests diferentes
 		assert.notThat(pablo.leAtraeLaActividad(viajeAPlaya1)) //lleva 2 dias
 		assert.that(pablo.leAtraeLaActividad(excursionCiudadTropical2)) //lleva 5 dias
 		assert.that(epifanio.leAtraeLaActividad(excursionCiudadTropical2)) //porque adora el sol y la actividad broncea
